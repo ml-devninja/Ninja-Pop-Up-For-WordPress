@@ -16,16 +16,14 @@ class NINJA_POP_UP
         add_action( 'admin_enqueue_scripts', array( &$this, 'npu_assets' ) );
 
         // Load custom assets on front-end layer
-        add_action( 'wp_head', array( &$this, 'enqueue_libs' ) );
+        add_action( 'wp_footer', array( &$this, 'enqueue_libs' ) );
 
         // Register Settings
         add_action( 'admin_init', array( &$this, 'npu_settings' ) );
 
-        // Add Two Menus - Mobile & Tablet
-        // add_action( 'init', array( &$this, 'register_material_menus' ));
 
         //  Print front-end layer
-        add_action( 'wp_head', array( &$this, 'print_on_frontend' ) );
+        add_action( 'wp_footer', array( &$this, 'print_on_frontend' ) );
 
     } // end constructor
 
@@ -72,16 +70,7 @@ class NINJA_POP_UP
 
 
     function enqueue_libs(){
-        // $options = get_option( 'npu_settings' );
-        // add_filter('show_admin_bar', '__return_false');
-
-//        wp_enqueue_style( 'icofont-base', plugin_dir_url(__FILE__).'style.css' );
         wp_enqueue_style( 'npu-base', plugin_dir_url(__FILE__).'assets/styles.css' );
-//        wp_enqueue_script( 'jQuery', 'http://code.jquery.com/jquery-2.1.4.min.js', array(), '1.0.0', true );
-//        wp_enqueue_script( 'velocity', '//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js', array(), '1.0.0', true );
-        // if($options['gestures']){
-        //     wp_enqueue_script( 'jQuery-mobile', '//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js', array(), '1.0.0', true );
-        // }
         wp_enqueue_script( 'npu-base', plugin_dir_url(__FILE__).'assets/npu.js', array(), '1.0.0', true );
     }
 
@@ -158,10 +147,6 @@ class NINJA_POP_UP
                     <input name="Submit" type="submit" class="button-primary"
                            value="<?php _e('Zapisz zmiany', 'npu'); ?>"/>
                 </p>
-                <?php
-                $options = get_option( 'npu_settings' );
-                var_dump($options);
-                ?>
 
             </form>
         </div>
@@ -219,7 +204,6 @@ class NINJA_POP_UP
             'options' => array(
                 array('center', 'Wycentrowany'),
                 array('sticky_bottom', 'Przyklejony do dołu'),
-                // ['scroll_bar', 'Scroll-Bar przy tekscie']
             )
         );
         ?>

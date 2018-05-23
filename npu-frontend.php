@@ -10,7 +10,7 @@
         <div class="content-col ">
             <?php if($options['pop_up_title']) : ?><h2><?php echo $options['pop_up_title']; ?></h2><?php  endif; ?>
             <div class="content <?php if($options['show_scroll_bar']) : ?>display__scroll<?php endif; ?>">
-                <?php echo $options['pop_up_content']; ?>
+                <?php echo wpautop($options['pop_up_content']); ?>
 
             </div>
 
