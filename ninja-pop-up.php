@@ -199,10 +199,10 @@ class NINJA_POP_UP
             'id' => 'header_menu',
             'setting' => 'show_',
             'options' => array(
-                ['title', 'Tytuł'],
-                ['image', 'Obrazek'],
-                ['scroll_bar', 'Scroll-Bar przy tekscie'],
-                ['buttons', 'Wyświetl przyciski']
+                array('title', 'Tytuł'),
+                array('image', 'Obrazek'),
+                array('scroll_bar', 'Scroll-Bar przy tekscie'),
+                array('buttons', 'Wyświetl przyciski')
             )
         );
         ?>
@@ -217,8 +217,8 @@ class NINJA_POP_UP
             'id' => 'popup_position',
             'setting' => 'position',
             'options' => array(
-                ['center', 'Wycentrowany'],
-                ['sticky_bottom', 'Przyklejony do dołu'],
+                array('center', 'Wycentrowany'),
+                array('sticky_bottom', 'Przyklejony do dołu'),
                 // ['scroll_bar', 'Scroll-Bar przy tekscie']
             )
         );
