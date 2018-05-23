@@ -1,0 +1,173 @@
+@import "vars";
+
+#npu-pop-up {
+  position: fixed;
+
+  display: none;
+  &.display-flex{
+    display: flex;
+  }
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  .box-shadow(0 0 20px black);
+
+  .wrapper {
+    background: @white;
+    position: relative;
+    width: 100%;
+    &.center {
+      @media @large {
+        width: 1140px;
+      }
+    }
+
+    .image-col {
+      width: 33%;
+      position: relative;
+      img {
+        max-width: 100%;
+        display: block;
+        height: auto;
+
+      }
+
+      + .content-col {
+        width: 67%;
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+    }
+
+    .content-col {
+      > h2{
+        font-size: 24px;
+      }
+      .content {
+
+        h1, h2, h3, h4, h5, h6 {
+          font-size: 16px;
+          color: @main_color_alpha_1;
+          padding-bottom: 5px;
+          border-bottom: 2px solid @main_color_alpha_1;
+          margin-top: 15px;
+        }
+        font-size: 13px;
+
+        &.display__scroll {
+          overflow-y: scroll;
+          max-height: 215px;
+        }
+      }
+    }
+  }
+
+  &:before {
+    content: '';
+    background: rgba(0, 0, 0, 0.65);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+
+  }
+
+  &.sticky_bottom {
+    &:before {
+      //display: none;
+    }
+    border-top: 5px solid @main_color;
+    bottom: 0;
+    height: 400px;
+    @media @phone {
+      height: 280px;
+    }
+    z-index: 999;
+    .wrapper {
+      z-index: 1;
+
+      @media @large {
+        width: 1140px;
+      }
+
+      &:before {
+        content: '';
+        background: @white;
+        position: absolute;
+        left: -2000px;
+        right: -2000px;
+        height: 100vh;
+        z-index: -1;
+
+      }
+
+      .image-col {
+        @media @phone {
+          display: none !important;
+        }
+        img {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+        }
+        + .content-col {
+          @media @phone {
+            width: 100%;
+          }
+          h2 {
+            border-bottom: 5px solid @main_color;
+            color: @main_color;
+            margin: 15px 0px;
+            padding: 5px 0 5px 10px;
+            border-left: 15px solid;
+
+            &:before {
+              content: '';
+              background: @main_color;
+            }
+
+          }
+          .content {
+            &.display__scroll {
+              @media @phone {
+                max-height: 200px;
+              }
+            }
+
+          }
+        }
+      }
+    }
+  }
+
+}
+
+.action-holder {
+  text-align: right;
+  margin-top: 25px;
+  button[class^="action-"] {
+    color: @white;
+    font-weight: 700;
+    margin: 0 15px;
+    padding: 15px 25px;
+    border: none;
+    opacity: 0.8;
+    transition: all .4s ease;
+    .box-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
+
+    &:hover {
+      opacity: 1;
+      .box-shadow(0px 2px 5px rgba(0, 0, 0, 0.5))
+
+    }
+    &.action-ok {
+      background: darkgreen;
+    }
+    &.action-cancel {
+      background: darkred;
+      margin-right: 0;
+    }
+  }
+
+}
