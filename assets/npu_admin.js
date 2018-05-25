@@ -43,7 +43,13 @@ jQuery('a.add_media').on('click', function() {
     // Add Color Picker to all inputs that have 'color-field' class
     $(function() {
         $('.color-field').wpColorPicker();
+        $(".datepicker").datepicker({
+            dateFormat : "dd-mm-yy"
+        });
+
         // console.log('color-picker')
     });
+
+
 
 })( jQuery );

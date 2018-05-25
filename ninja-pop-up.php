@@ -2,7 +2,7 @@
 /*
 Plugin Name: Ninja Pop Up for WordPress
 Description: Add a pop-up easily! Add time slot, custom text or image! 
-Version: 0.1
+Version: 0.2
 */
 
 class NINJA_POP_UP
@@ -57,7 +57,15 @@ class NINJA_POP_UP
             wp_enqueue_script( 'media-upload' );
             wp_enqueue_style( 'wp-color-picker' );
             wp_enqueue_media();
-            wp_register_script('npu_admin', plugins_url( '/assets/npu_admin.js' , __FILE__ ), array( 'thickbox', 'media-upload', 'wp-color-picker' ));
+            // Load the datepicker script (pre-registered in WordPress).
+            wp_enqueue_script( 'jquery-ui-datepicker' );
+
+            // You need styling for the datepicker. For simplicity I've linked to Google's hosted jQuery UI CSS.
+            wp_register_style( 'jquery-ui', 'http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css' );
+            wp_enqueue_style( 'jquery-ui' );
+
+
+            wp_register_script('npu_admin', plugins_url( '/assets/npu_admin.js' , __FILE__ ), array( 'thickbox', 'media-upload', 'wp-color-picker', 'jquery-ui-datepicker' ));
             wp_enqueue_script('npu_admin');
 
 
@@ -122,6 +130,19 @@ class NINJA_POP_UP
 
             <?php $i++; endforeach; }
 
+    function datepicker($data){$options = get_option('npu_settings');
+        $i=1; foreach($data['options'] as $option) : ?>
+            <pre>
+                <?php var_dump($options); ?>
+            </pre>
+            <label for="<?php echo $data['id'].$i; ?>">
+                <?php echo $option[1]; ?><br/>
+                <input type="text" class="datepicker" id="<?php echo $data['id'].$i; ?>"  name="npu_settings[<?php echo $data['setting'].$option[0]; ?>]" value="<?php echo $options[$data['setting'].$option[0]]; ?>"/>
+            </label><br/><br/>
+
+            <?php $i++; endforeach;
+    }
+
     /*--------------------------------------------*
      * Settings & Settings Page
      *--------------------------------------------*/
@@ -167,6 +188,9 @@ class NINJA_POP_UP
             add_settings_field('main_color', 'Podstawowy kolor', array( &$this, 'main_color' ), 'npu_settings', 'other');
             add_settings_field('pop_up_image', 'Obrazek', array( &$this, 'pop_up_image' ), 'npu_settings', 'other');
             add_settings_field('pop_up_position', 'Pozycja: ', array( &$this, 'pop_up_position' ), 'npu_settings', 'other');
+            add_settings_field('pop_up_datepickers', 'Zakres dat: ', array( &$this, 'pop_up_datepickers' ), 'npu_settings', 'other');
+        add_settings_field('use_data_range', 'Zakres dat: ', array( &$this, 'use_data_range' ), 'npu_settings', 'other');
+        add_settings_field('display_home_only', 'Zakres dat: ', array( &$this, 'display_home_only' ), 'npu_settings', 'other');
     }
 
 
@@ -197,6 +221,18 @@ class NINJA_POP_UP
     <?php
     }
 
+    function pop_up_datepickers(){
+        $items = array(
+                "id" => "datepickers",
+            "setting" => "date_",
+            "options" => array(
+                array('start', 'Data początkowa'),
+                array('stop', 'Data końcowa'),
+            )
+        );
+        $this->datepicker($items);
+    }
+
     function pop_up_position() {
         $items = array(
             'id' => 'popup_position',
@@ -211,6 +247,38 @@ class NINJA_POP_UP
             <?php $this->radioButtons($items); ?>
         </span>
     <?php
+    }
+
+
+    function use_data_range() {
+        $items = array(
+            'id' => 'popup_data_range',
+            'setting' => 'data_',
+            'options' => array(
+                array('range', 'Wyświetlaj w zakresie dat'),
+            )
+        );
+        ?>
+        <span class='checkboxes'>
+            <?php $this->checkboxes($items); ?>
+        </span>
+        <?php
+    }
+
+
+    function display_home_only() {
+        $items = array(
+            'id' => 'popup_only_home',
+            'setting' => 'only_',
+            'options' => array(
+                array('home', 'Wyświetlaj tylko na stronie głównej'),
+            )
+        );
+        ?>
+        <span class='checkboxes'>
+            <?php $this->checkboxes($items); ?>
+        </span>
+        <?php
     }
 
     function pop_up_image(){
@@ -242,6 +310,8 @@ class NINJA_POP_UP
         $args = array('textarea_name' => 'npu_settings[pop_up_content]');
         wp_editor($content, 'pop_up_content', $args);
     }
+
+
 
     function print_on_frontend(){
         $options = get_option('npu_settings');

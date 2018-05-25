@@ -54,7 +54,7 @@
 #npu-pop-up {
   position: fixed;
   display: none;
-  z-index: 1;
+  z-index: 999;
   width: 100vw;
   height: 100vh;
   -webkit-box-shadow: 0 0 20px black;
@@ -64,14 +64,48 @@
 #npu-pop-up.display-flex {
   display: flex;
 }
+#npu-pop-up.v-align-centered {
+  top: 0;
+}
 #npu-pop-up .wrapper {
   background: #FFFFFF;
   position: relative;
   width: 100%;
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1200px), only screen and (min-width: 992px) and (max-width:1199px) {
   #npu-pop-up .wrapper.center {
-    width: 1140px;
+    width: 50vw;
+  }
+}
+#npu-pop-up .wrapper.center .content-col {
+  flex: 1;
+  padding-bottom: 15px;
+}
+#npu-pop-up .wrapper.center .content-col > h2 {
+  font-weight: 300;
+  background: #1e73be;
+  padding: 15px 30px;
+  margin: 0;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+}
+#npu-pop-up .wrapper.center .content-col .content {
+  padding: 15px;
+  text-align: center;
+}
+#npu-pop-up .wrapper.center .action-holder {
+  text-align: center;
+}
+#npu-pop-up .wrapper.center .action-holder .action-ok {
+  background: #175892;
+  width: auto;
+  display: inline-block;
+  padding: 15px 50px;
+}
+@media only screen and (max-width: 767px), only screen and (min-width: 768px) and (max-width:991px) {
+  #npu-pop-up .wrapper {
+    padding: 0 15px;
   }
 }
 #npu-pop-up .wrapper .image-col {
@@ -113,6 +147,11 @@
   overflow-y: scroll;
   max-height: 215px;
 }
+@media only screen and (max-width: 767px) {
+  #npu-pop-up .wrapper .content-col .content.display__scroll {
+    max-height: calc(100% - 300px);
+  }
+}
 #npu-pop-up:before {
   content: '';
   background: rgba(0, 0, 0, 0.65);
@@ -130,7 +169,7 @@
 }
 @media only screen and (max-width: 767px) {
   #npu-pop-up.sticky_bottom {
-    height: 280px;
+    height: 85vh;
   }
 }
 #npu-pop-up.sticky_bottom .wrapper {
@@ -185,6 +224,11 @@
   text-align: right;
   margin-top: 25px;
 }
+@media only screen and (max-width: 767px) {
+  .action-holder {
+    text-align: center;
+  }
+}
 .action-holder button[class^="action-"] {
   color: #FFFFFF;
   font-weight: 700;
@@ -196,6 +240,13 @@
   -webkit-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+}
+@media only screen and (max-width: 767px) {
+  .action-holder button[class^="action-"] {
+    display: block;
+    width: 100%;
+    margin: 15px 0;
+  }
 }
 .action-holder button[class^="action-"]:hover {
   opacity: 1;
